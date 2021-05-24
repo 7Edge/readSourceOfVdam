@@ -10,6 +10,7 @@
 .project
 .pydevproject
 .tox
+.vscode
 INSTALL
 Makefile
 Makefile.in

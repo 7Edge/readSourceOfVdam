@@ -88,7 +88,23 @@ USER_SHUTDOWN_MESSAGE = 'System going down'
 throttledlog.throttle('getAllVmStats', 100)
 throttledlog.throttle('getStats', 100)
 
-
+"""
+下面的APIBase是一个基础父类。其它的每一个继承APIBase的类是vdsm的API的分类。
+其中每个子类的名字正好对应，vdsm-client中的namespaces:
+    *Host 对应的应该是Global, 名字不是Host。
+    ManagedVolume
+    ISCSIConnection
+    Image
+    Lease
+    LVMVolumeGroup
+    StorageDomain
+    StoragePool
+    Task
+    VM
+    Volume
+    SDM
+    NBD
+"""
 class APIBase(object):
     ctorArgs = []
 
@@ -123,6 +139,9 @@ class Task(APIBase):
 
 # TODO: use a class decorator instead of decorating each method.
 class VM(APIBase):
+    """
+    1.
+    """
     BLANK_UUID = '00000000-0000-0000-0000-000000000000'
     LOG_ATTRIBUTES = {'vmId': '_UUID'}
     ctorArgs = ['vmID']
@@ -781,6 +800,9 @@ class VM(APIBase):
 
 
 class Volume(APIBase):
+    """
+    1.
+    """
     ctorArgs = ['volumeID', 'storagepoolID', 'storagedomainID', 'imageID']
 
     class Types:
@@ -881,6 +903,9 @@ class Volume(APIBase):
 
 
 class Image(APIBase):
+    """
+    1.
+    """
     ctorArgs = ['imageID', 'storagepoolID', 'storagedomainID']
 
     BLANK_UUID = sc.BLANK_UUID
@@ -951,6 +976,9 @@ class Image(APIBase):
 
 
 class LVMVolumeGroup(APIBase):
+    """
+    1.
+    """
     ctorArgs = ['lvmvolumegroupID']
 
     def __init__(self, lvmvolumegroupID=None):
@@ -976,6 +1004,9 @@ class LVMVolumeGroup(APIBase):
 
 
 class ISCSIConnection(APIBase):
+    """
+    1.
+    """
     ctorArgs = []
 
     def __init__(self):
@@ -989,6 +1020,9 @@ class ISCSIConnection(APIBase):
 
 
 class StorageDomain(APIBase):
+    """
+    1.
+    """
     ctorArgs = []
 
     class Types:
@@ -1086,6 +1120,9 @@ class StorageDomain(APIBase):
 
 
 class StoragePool(APIBase):
+    """
+    1.
+    """
     ctorArgs = ['storagepoolID']
 
     def __init__(self, UUID):
@@ -1188,6 +1225,10 @@ class StoragePool(APIBase):
 
 
 class Global(APIBase):
+    """
+    应该对应的是vdsm-client的Host namespace。
+    
+    """
     ctorArgs = []
 
     def __init__(self):
@@ -1713,6 +1754,9 @@ class Global(APIBase):
 
 
 class SDM(APIBase):
+    """
+    1.
+    """
     ctorArgs = []
 
     def copy_data(self, job_id, source, destination, copy_bitmaps=False):
@@ -1746,6 +1790,9 @@ class SDM(APIBase):
 
 
 class Lease(APIBase):
+    """
+    1.
+    """
     ctorArgs = []
 
     def create(self, lease):
@@ -1765,6 +1812,9 @@ class Lease(APIBase):
 
 
 class NBD(APIBase):
+    """
+    1.
+    """
 
     def start_server(self, server_id, config):
         return self._irs.start_nbd_server(server_id, config)
@@ -1774,6 +1824,9 @@ class NBD(APIBase):
 
 
 class ManagedVolume(APIBase):
+    """
+    1.
+    """
 
     @api.logged(on="api.storage")
     @api.method
